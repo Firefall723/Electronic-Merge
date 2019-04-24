@@ -8,22 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		513C8F3022709C4D00876986 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513C8F2F22709C4D00876986 /* AppDelegate.swift */; };
-		513C8F3622709C4D00876986 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513C8F3522709C4D00876986 /* GameScene.swift */; };
 		513C8F3822709C4D00876986 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513C8F3722709C4D00876986 /* GameViewController.swift */; };
 		513C8F3B22709C4D00876986 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 513C8F3922709C4D00876986 /* Main.storyboard */; };
 		513C8F3D22709C4E00876986 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 513C8F3C22709C4E00876986 /* Assets.xcassets */; };
 		513C8F4022709C4E00876986 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 513C8F3E22709C4E00876986 /* LaunchScreen.storyboard */; };
+		513C8F482270A16300876986 /* Collisions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513C8F472270A16300876986 /* Collisions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		513C8F2C22709C4D00876986 /* Electronic Merge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Electronic Merge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		513C8F2F22709C4D00876986 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		513C8F3522709C4D00876986 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		513C8F3722709C4D00876986 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		513C8F3A22709C4D00876986 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		513C8F3C22709C4E00876986 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		513C8F3F22709C4E00876986 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		513C8F4122709C4E00876986 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		513C8F472270A16300876986 /* Collisions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collisions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,8 +57,8 @@
 			isa = PBXGroup;
 			children = (
 				513C8F2F22709C4D00876986 /* AppDelegate.swift */,
-				513C8F3522709C4D00876986 /* GameScene.swift */,
 				513C8F3722709C4D00876986 /* GameViewController.swift */,
+				513C8F472270A16300876986 /* Collisions.swift */,
 				513C8F3922709C4D00876986 /* Main.storyboard */,
 				513C8F3C22709C4E00876986 /* Assets.xcassets */,
 				513C8F3E22709C4E00876986 /* LaunchScreen.storyboard */,
@@ -138,8 +138,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				513C8F3622709C4D00876986 /* GameScene.swift in Sources */,
 				513C8F3822709C4D00876986 /* GameViewController.swift in Sources */,
+				513C8F482270A16300876986 /* Collisions.swift in Sources */,
 				513C8F3022709C4D00876986 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
