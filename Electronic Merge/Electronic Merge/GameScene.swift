@@ -56,8 +56,9 @@ class GameScene: SKScene {
             timer.text = "\(time)"
             updateSpots()
         }
+        } else {
+            timer.text = "Full"
         }
-        timer.text = "Full"
     }
     
     
