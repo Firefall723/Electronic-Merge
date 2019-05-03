@@ -5,23 +5,24 @@ class GameScene: SKScene {
     let timer = SKLabelNode(text: "")
     var items: [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     let platformSize = CGSize(width: 50, height: 50)
+    var isFull = false
     
-    func {
+    //func {
     
-    }
+    //}
     
     func spawnObject(levelMod: Int, platformPos: CGPoint, platformSpot: Int) {
         var object: SKSpriteNode!
         if levelMod == 1 {
-        object = SKSpriteNode(fileNamed: "wire")        }
+        object = SKSpriteNode(imageNamed: "Wire")        }
         else if levelMod == 2 {
-        object = SKSpriteNode(fileNamed: "CircuitBoard")
+        object = SKSpriteNode(imageNamed: "CircuitBoard")
         }
         else {
         object = SKSpriteNode(color: .red, size: platformSize)
         }
         object.size = platformSize
-        object.position = CGPoint(x: (platformPos.x), y: (platformPos.y + 20))
+        object.position = CGPoint(x: (platformPos.x), y: (platformPos.y + 5))
         object.name = "object\(platformSpot)level\(levelMod)"
         addChild(object)
     }
@@ -33,10 +34,10 @@ class GameScene: SKScene {
         items[i] = 1
             let updatePlatform = childNode(withName: "platform\(i + 1)") as! SKSpriteNode
             spawnObject(levelMod: 1, platformPos: updatePlatform.position, platformSpot: (i + 1))
-            
+            isFull = false
         }
         else {
-            print("no empty spaces")
+            isFull = true
         }
     }
     
@@ -45,6 +46,7 @@ class GameScene: SKScene {
     }
     
     @objc func timeUpdate() {
+        if isFull == false {
         if time <= 10 && time >= 1 {
             time = (time - 1)
             timer.text = "\(time)"
@@ -54,13 +56,15 @@ class GameScene: SKScene {
             timer.text = "\(time)"
             updateSpots()
         }
+        }
+        timer.text = "Full"
     }
     
     
     func platforms(positionSetting: Int) {
         let platform = SKSpriteNode(color: UIColor.black, size: platformSize)
-        let positionX: [CGFloat] = [0.2, 0.5, 0.8, 0.2, 0.5, 0.8, 0.2, 0.5, 0.8]
-        let positionY: [CGFloat] = [0.5, 0.5, 0.5, 0.6, 0.6, 0.6, 0.7, 0.7, 0.7]
+        let positionX: [CGFloat] = [0.15, 0.5, 0.85, 0.15, 0.5, 0.85, 0.15, 0.5, 0.85]
+        let positionY: [CGFloat] = [0.45, 0.45, 0.45, 0.6, 0.6, 0.6, 0.75, 0.75, 0.75]
             let trueX =  ((self.size.width) * positionX[positionSetting])
             let trueY = ((self.size.height) * positionY[positionSetting])
             platform.position = CGPoint(x: trueX, y: trueY)
