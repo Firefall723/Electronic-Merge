@@ -6,10 +6,24 @@ class GameScene: SKScene {
     var items: [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     let platformSize = CGSize(width: 50, height: 50)
     
-    func spawnObject(levelMod: Int, platformPos: CGPoint) {
-        //level mod is unused atm
-        let object = SKSpriteNode(color: .red, size: platformSize)
-        object.position = CGPoint(x: (platformPos.x), y: (platformPos.y + 10))
+    func {
+    
+    }
+    
+    func spawnObject(levelMod: Int, platformPos: CGPoint, platformSpot: Int) {
+        var object: SKSpriteNode!
+        if levelMod == 1 {
+        object = SKSpriteNode(fileNamed: "wire")        }
+        else if levelMod == 2 {
+        object = SKSpriteNode(fileNamed: "CircuitBoard")
+        }
+        else {
+        object = SKSpriteNode(color: .red, size: platformSize)
+        }
+        object.size = platformSize
+        object.position = CGPoint(x: (platformPos.x), y: (platformPos.y + 20))
+        object.name = "object\(platformSpot)level\(levelMod)"
+        addChild(object)
     }
     
     
@@ -18,7 +32,7 @@ class GameScene: SKScene {
         if let i = items.firstIndex(of: 0){
         items[i] = 1
             let updatePlatform = childNode(withName: "platform\(i + 1)") as! SKSpriteNode
-        updatePlatform.color = UIColor.green
+            spawnObject(levelMod: 1, platformPos: updatePlatform.position, platformSpot: (i + 1))
             
         }
         else {
