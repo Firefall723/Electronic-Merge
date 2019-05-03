@@ -70,7 +70,8 @@ class GameScene: SKScene {
     
     func spawnCrate() {
         //creates the crate also the timer
-        let crate = SKSpriteNode(color: SKColor.brown, size: CGSize(width: 100, height: 100))
+        let crate = SKSpriteNode(imageNamed: "Crate")
+        crate.scale(to: CGSize(width: 100, height: 100))
         timer.text = "10"
         timer.fontColor = SKColor.black
         timer.fontName = "AvenirNextCondensed-Bold"
