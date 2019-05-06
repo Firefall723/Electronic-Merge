@@ -1,4 +1,5 @@
 import SpriteKit
+
 class GameScene: SKScene {
     var time: Int = 10
     var clock = Timer()
@@ -7,9 +8,14 @@ class GameScene: SKScene {
     let platformSize = CGSize(width: 50, height: 50)
     var isFull = false
     
-    //func {
-    
-    //}
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first
+        if let location = touch?.location(in: self) {
+            for node in self.nodes(at: location) {
+                
+            }
+        }
+    }
     
     func spawnObject(levelMod: Int, platformPos: CGPoint, platformSpot: Int) {
         var object: SKSpriteNode!
@@ -69,6 +75,8 @@ class GameScene: SKScene {
             let trueX =  ((self.size.width) * positionX[positionSetting])
             let trueY = ((self.size.height) * positionY[positionSetting])
             platform.position = CGPoint(x: trueX, y: trueY)
+            platform.zPosition = -1
+            platform.isUserInteractionEnabled = false
             platform.name = "platform\(positionSetting + 1)"
             addChild(platform)
     }
