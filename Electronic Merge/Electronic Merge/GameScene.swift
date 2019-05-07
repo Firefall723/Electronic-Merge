@@ -7,6 +7,7 @@ class GameScene: SKScene {
     var items: [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     let platformSize = CGSize(width: 50, height: 50)
     var isFull = false
+    var object : SKSpriteNode!
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
@@ -17,8 +18,15 @@ class GameScene: SKScene {
         }
     }
     
+     func touchMoved(toPoint pos : CGPoint) {
+        if let n = self.object?.copy() as! SKSpriteNode? {
+            
+        }
+    }
+    
     func spawnObject(levelMod: Int, platformPos: CGPoint, platformSpot: Int) {
         var object: SKSpriteNode!
+        self.object = object
         if levelMod == 1 {
         object = SKSpriteNode(imageNamed: "Wire")        }
         else if levelMod == 2 {
