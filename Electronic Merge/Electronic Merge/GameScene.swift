@@ -8,6 +8,39 @@ class GameScene: SKScene {
     let platformSize = CGSize(width: 50, height: 50)
     var isFull = false
     var object : SKSpriteNode!
+    let platformID = 1
+    let objectID = 2
+    let nilID = 0
+    
+    
+    func physicBodySetUp(sprite: SKSpriteNode, ID1: Int) {
+        sprite.physicsBody = SKPhysicsBody(rectangleOf: sprite.size)
+        sprite.physicsBody?.isDynamic = true
+        sprite.physicsBody?.categoryBitMask = UInt32(ID1)
+        sprite.physicsBody?.contactTestBitMask = UInt32(ID1)
+        sprite.physicsBody?.collisionBitMask = UInt32(nilID)
+    }
+    
+    func levelUp(object1: SKSpriteNode, object2: SKSpriteNode, level1: Int, level2: Int, platform1: CGPoint, platform2: CGPoint, platformValue1: Int, platformValue2: Int){
+        
+        if level1 == level2 {
+            object1.removeFromParent()
+            object2.removeFromParent()
+            let newLevel = (level1 + 1)
+            spawnObject(levelMod: newLevel, platformPos: platform2, platformSpot: platformValue2)
+            items[(platformValue1 - 1)] = 0
+            items[(platformValue2 - 1)] = newLevel
+            
+            
+        }
+        else {
+            object1.position = platform1
+            object2.position = platform2
+        }
+        
+        
+        
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
@@ -38,6 +71,7 @@ class GameScene: SKScene {
         object.size = platformSize
         object.position = CGPoint(x: (platformPos.x), y: (platformPos.y + 5))
         object.name = "object\(platformSpot)level\(levelMod)"
+        physicBodySetUp(sprite: object, ID1: objectID)
         addChild(object)
     }
     

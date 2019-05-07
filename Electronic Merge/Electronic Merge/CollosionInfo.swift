@@ -2,10 +2,11 @@ import Foundation
 import SpriteKit
 
 class CollosionInfo {
-    let platformID = 1
+   /* let platformID = 1
     let objectID = 2
-    let nilID = 0
+    let nilID = 0 */
     let platformSize = CGSize(width: 50, height: 50)
+    var items: [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     
     
     func spawnObject(levelMod: Int, platformPos: CGPoint, platformSpot: Int) {
@@ -24,12 +25,15 @@ class CollosionInfo {
     }
     
 
-    func levelUp(object1: SKSpriteNode, object2: SKSpriteNode, level1: Int, level2: Int, platform1: CGPoint, platform2: CGPoint){
+    func levelUp(object1: SKSpriteNode, object2: SKSpriteNode, level1: Int, level2: Int, platform1: CGPoint, platform2: CGPoint, platformValue1: Int, platformValue2: Int){
         
         if level1 == level2 {
             object1.removeFromParent()
             object2.removeFromParent()
             let newLevel = (level1 + 1)
+            spawnObject(levelMod: newLevel, platformPos: platform2, platformSpot: platformValue2)
+            items[(platformValue1 - 1)] = 0
+            items[(platformValue2 - 1)] = newLevel
             
             
         }
