@@ -60,10 +60,16 @@ class GameScene: SKScene {
         lastTouch = touchLocation
         
     }
-     func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.object?.copy() as! SKSpriteNode? {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        /*if let n = self.object?.copy() as! SKSpriteNode? {
             var move = SKAction.move(to: pos, duration: 0)
-            n.run(move)
+            n.run(move)*/
+        if items[0] == 1 {
+        for touch in touches {
+            let location = touch.location(in: self)
+            object.position.x = location.x
+            object.position.y = location.y
+        }
         }
     }
     
