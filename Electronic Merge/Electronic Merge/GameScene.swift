@@ -42,7 +42,7 @@ class GameScene: SKScene {
         
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+   /* override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         if let location = touch?.location(in: self) {
             for node in self.nodes(at: location) {
@@ -50,7 +50,16 @@ class GameScene: SKScene {
             }
         }
     }
+    */
     
+    var lastTouch: CGPoint? = nil
+    
+ func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        let touch = touches.anyObject() as! UITouch
+        let touchLocation = touch.location(in: self)
+        lastTouch = touchLocation
+        
+    }
      func touchMoved(toPoint pos : CGPoint) {
         if let n = self.object?.copy() as! SKSpriteNode? {
             var move = SKAction.move(to: pos, duration: 0)
@@ -140,6 +149,7 @@ class GameScene: SKScene {
     
     
     override func didMove(to view: SKView) {
+        physicsWorld.gravity = CGVector.zero
         backgroundColor = SKColor.white
         spawnCrate()
         startTimer()
