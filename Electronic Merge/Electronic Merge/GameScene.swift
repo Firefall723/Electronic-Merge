@@ -58,7 +58,6 @@ class GameScene: SKScene {
         let touch = touches.anyObject() as! UITouch
         let touchLocation = touch.location(in: self)
         lastTouch = touchLocation
-        
     }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         /*if let n = self.object?.copy() as! SKSpriteNode? {
