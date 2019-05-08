@@ -63,8 +63,7 @@ class GameScene: SKScene {
      func touchMoved(toPoint pos : CGPoint) {
         if let n = self.object?.copy() as! SKSpriteNode? {
             var move = SKAction.move(to: pos, duration: 0)
-            
-            
+            n.run(move)
         }
     }
     
