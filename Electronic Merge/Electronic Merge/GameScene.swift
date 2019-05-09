@@ -6,6 +6,7 @@ class GameScene: SKScene {
     let timer = SKLabelNode(text: "")
     var items: [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     let platformSize = CGSize(width: 50, height: 50)
+    var activeObject: SKSpriteNode!
     var isFull = false
     var object : SKSpriteNode!
     let platformID = 1
@@ -41,34 +42,36 @@ class GameScene: SKScene {
         
         
     }
+
     
-   /* override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touch = touches.first
-        if let location = touch?.location(in: self) {
-            for node in self.nodes(at: location) {
-                
-            }
-        }
-    }
-    */
     
-    var lastTouch: CGPoint? = nil
-    
- func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        let touch = touches.anyObject() as! UITouch
-        let touchLocation = touch.location(in: self)
-        lastTouch = touchLocation
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    print(touches)
+    let touch = touches.first
+    if let touchLocation = touch?.location(in: self) {
+    let selectedNode = nodes(at: touchLocation)[0] as! SKSpriteNode
         
+    }
+
     }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         /*if let n = self.object?.copy() as! SKSpriteNode? {
             var move = SKAction.move(to: pos, duration: 0)
             n.run(move)*/
         if items[0] == 1 {
+
         for touch in touches {
+            
             let location = touch.location(in: self)
-            object.position.x = location.x
-            object.position.y = location.y
+            if case activeObject.position.x = location.x
+            {
+
+            activeObject.position.x = location.x
+            activeObject.position.y = location.y
+            }
+            else {
+                return
+            }
         }
         }
     }
