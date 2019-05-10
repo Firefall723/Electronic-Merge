@@ -5,8 +5,13 @@ class GameScene: SKScene {
     var clock = Timer()
     let timer = SKLabelNode(text: "")
     var items: [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    var platformX: [CGFloat] = []
+    var platformY: [CGFloat] = []
     let platformSize = CGSize(width: 50, height: 50)
     var activeObject: SKSpriteNode!
+    var storedPlatform: Int!
+    var storedLevel: Int!
+    var storedData: [Any] = []
     var isFull = false
     var object : SKSpriteNode!
     let platformID = 1
@@ -46,34 +51,26 @@ class GameScene: SKScene {
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    print(touches)
     let touch = touches.first
     if let touchLocation = touch?.location(in: self) {
     let selectedNode = nodes(at: touchLocation)[0] as! SKSpriteNode
-        
-    }
+        activeObject = selectedNode
+        storedData = Array(activeObject.name!)
+        storedPlatform = storedData[2] as? Int
         }
     }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        /*if let n = self.object?.copy() as! SKSpriteNode? {
-            var move = SKAction.move(to: pos, duration: 0)
-            n.run(move)*/
         if items[0] == 1 {
-
         for touch in touches {
             
             let location = touch.location(in: self)
-            if case activeObject.position.x = location.x
-            {
-
             activeObject.position.x = location.x
             activeObject.position.y = location.y
-            }
-            else {
-                return
-            }
         }
         }
+    }
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        activeObject.position = CGPoint(x: platformX[storedPlatform], y: platformY[storedPlatform])
     }
     
     func spawnObject(levelMod: Int, platformPos: CGPoint, platformSpot: Int) {
@@ -89,7 +86,7 @@ class GameScene: SKScene {
         }
         object.size = platformSize
         object.position = CGPoint(x: (platformPos.x), y: (platformPos.y + 5))
-        object.name = "object\(platformSpot)level\(levelMod)"
+        object.name = "O_\(platformSpot)_\(levelMod)"
         physicBodySetUp(sprite: object, ID1: objectID)
         addChild(object)
     }
@@ -135,6 +132,8 @@ class GameScene: SKScene {
         let positionY: [CGFloat] = [0.45, 0.45, 0.45, 0.6, 0.6, 0.6, 0.75, 0.75, 0.75]
             let trueX =  ((self.size.width) * positionX[positionSetting])
             let trueY = ((self.size.height) * positionY[positionSetting])
+        platformX.append(platform.position.x)
+        platformY.append(platform.position.y)
             platform.position = CGPoint(x: trueX, y: trueY)
             platform.zPosition = -1
             platform.isUserInteractionEnabled = false
