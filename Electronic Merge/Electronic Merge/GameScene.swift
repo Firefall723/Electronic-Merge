@@ -11,7 +11,7 @@ class GameScene: SKScene {
     var activeObject: SKSpriteNode!
     var storedPlatform: Int!
     var storedLevel: Int!
-    var storedData: [Any] = []
+    var storedData: [Character] = []
     var isFull = false
     var object : SKSpriteNode!
     let platformID = 1
@@ -54,15 +54,16 @@ class GameScene: SKScene {
     let touch = touches.first
     if let touchLocation = touch?.location(in: self) {
     let selectedNode = nodes(at: touchLocation)[0] as! SKSpriteNode
+        
         activeObject = selectedNode
         storedData = Array(activeObject.name!)
-        storedPlatform = storedData[2] as? Int
+        let dataStoredInt = storedData[2]
+        storedPlatform = Int(dataStoredInt.unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
         }
     }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if items[0] == 1 {
         for touch in touches {
-            
             let location = touch.location(in: self)
             activeObject.position.x = location.x
             activeObject.position.y = location.y
@@ -70,7 +71,7 @@ class GameScene: SKScene {
         }
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        activeObject.position = CGPoint(x: platformX[storedPlatform], y: platformY[storedPlatform])
+        activeObject.position = CGPoint(x: platformX[storedPlatform! - 1], y: platformY[storedPlatform! - 1])
     }
     
     func spawnObject(levelMod: Int, platformPos: CGPoint, platformSpot: Int) {
@@ -132,8 +133,8 @@ class GameScene: SKScene {
         let positionY: [CGFloat] = [0.45, 0.45, 0.45, 0.6, 0.6, 0.6, 0.75, 0.75, 0.75]
             let trueX =  ((self.size.width) * positionX[positionSetting])
             let trueY = ((self.size.height) * positionY[positionSetting])
-        platformX.append(platform.position.x)
-        platformY.append(platform.position.y)
+        platformX.append(trueX)
+        platformY.append(trueY + 5)
             platform.position = CGPoint(x: trueX, y: trueY)
             platform.zPosition = -1
             platform.isUserInteractionEnabled = false
