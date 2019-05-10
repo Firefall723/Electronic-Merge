@@ -12,7 +12,6 @@ class GameScene: SKScene {
     let platformID = 1
     let objectID = 2
     let nilID = 0
-    let crate = SKSpriteNode(imageNamed: "Crate")
     
     
     func physicBodySetUp(sprite: SKSpriteNode, ID1: Int) {
@@ -47,12 +46,34 @@ class GameScene: SKScene {
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    print(touches)
     let touch = touches.first
     if let touchLocation = touch?.location(in: self) {
     let selectedNode = nodes(at: touchLocation)[0] as! SKSpriteNode
+        
+    }
         }
-        }
+    }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        /*if let n = self.object?.copy() as! SKSpriteNode? {
+            var move = SKAction.move(to: pos, duration: 0)
+            n.run(move)*/
+        if items[0] == 1 {
+
+        for touch in touches {
+            
+            let location = touch.location(in: self)
+            if case activeObject.position.x = location.x
+            {
+
+            activeObject.position.x = location.x
+            activeObject.position.y = location.y
+            }
+            else {
+                return
+            }
+        }
+        }
     }
     
     func spawnObject(levelMod: Int, platformPos: CGPoint, platformSpot: Int) {
@@ -123,6 +144,7 @@ class GameScene: SKScene {
     
     func spawnCrate() {
         //creates the crate also the timer
+        let crate = SKSpriteNode(imageNamed: "Crate")
         crate.scale(to: CGSize(width: 100, height: 100))
         timer.text = "10"
         timer.fontColor = SKColor.black
