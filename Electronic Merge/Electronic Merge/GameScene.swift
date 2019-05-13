@@ -12,11 +12,13 @@ class GameScene: SKScene {
     var storedPlatform: Int!
     var storedLevel: Int!
     var storedData: [Character] = []
+    var storedObject: SKSpriteNode!
     var isFull = false
     var object : SKSpriteNode!
     let platformID = 1
     let objectID = 2
     let nilID = 0
+    var levelingUp: Bool!
     
     
     func physicBodySetUp(sprite: SKSpriteNode, ID1: Int) {
@@ -27,9 +29,10 @@ class GameScene: SKScene {
         sprite.physicsBody?.collisionBitMask = UInt32(nilID)
     }
     
-    func levelUp(object1: SKSpriteNode, object2: SKSpriteNode, level1: Int, level2: Int, platform1: CGPoint, platform2: CGPoint, platformValue1: Int, platformValue2: Int){
+    func levelUp(object1: SKSpriteNode, object2: SKSpriteNode, level1: Int, level2: Int, platform2: CGPoint, platformValue1: Int, platformValue2: Int){
         
         if level1 == level2 {
+            levelingUp = true
             object1.removeFromParent()
             object2.removeFromParent()
             let newLevel = (level1 + 1)
@@ -40,8 +43,7 @@ class GameScene: SKScene {
             
         }
         else {
-            object1.position = platform1
-            object2.position = platform2
+            levelingUp = false
         }
         
         
@@ -49,16 +51,18 @@ class GameScene: SKScene {
     }
 
     
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     let touch = touches.first
     if let touchLocation = touch?.location(in: self) {
     let selectedNode = nodes(at: touchLocation)[0] as! SKSpriteNode
         
         activeObject = selectedNode
         storedData = Array(activeObject.name!)
-        let dataStoredInt = storedData[2]
-        storedPlatform = Int(dataStoredInt.unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
+        let platformStoredInt = storedData[2]
+        storedPlatform = Int(platformStoredInt.unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
+        let levelStoredInt = storedData[4]
+        storedLevel = Int(levelStoredInt.unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
+        
         }
     }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -71,7 +75,16 @@ class GameScene: SKScene {
         }
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first
+        if let touchLocation = touch?.location(in: self) {
+            let selectedNode = nodes(at: touchLocation)[1] as! SKSpriteNode
+       print(selectedNode.name)
+        }
+            
+        /*levelUp(object1: storedObject, object2: <#T##SKSpriteNode#>, level1: storedLevel, level2: <#T##Int#>, platform2: <#T##CGPoint#>, platformValue1: storedPlatform, platformValue2: <#T##Int#>)
+        if levelingUp == false {
         activeObject.position = CGPoint(x: platformX[storedPlatform! - 1], y: platformY[storedPlatform! - 1])
+        }*/
     }
     
     func spawnObject(levelMod: Int, platformPos: CGPoint, platformSpot: Int) {
@@ -158,7 +171,7 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         physicsWorld.gravity = CGVector.zero
-        backgroundColor = SKColor.white
+        backgroundColor = SKColor.red
         spawnCrate()
         startTimer()
         for i in 0...8 {
