@@ -10,9 +10,7 @@ class GameScene: SKScene {
     let platformSize = CGSize(width: 50, height: 50)
     var activeObject: SKSpriteNode!
     var storedPlatform: Int!
-    var storedLevel: Int!
     var storedData: [Character] = []
-    var storedObject: SKSpriteNode!
     var isFull = false
     var object : SKSpriteNode!
     let platformID = 1
@@ -60,8 +58,6 @@ class GameScene: SKScene {
         storedData = Array(activeObject.name!)
         let platformStoredInt = storedData[2]
         storedPlatform = Int(platformStoredInt.unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
-        let levelStoredInt = storedData[4]
-        storedLevel = Int(levelStoredInt.unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
         
         }
     }
@@ -78,13 +74,29 @@ class GameScene: SKScene {
         let touch = touches.first
         if let touchLocation = touch?.location(in: self) {
             let selectedNode = nodes(at: touchLocation)[1] as! SKSpriteNode
-       print(selectedNode.name)
-        }
+            let selectedNode2 = nodes(at: touchLocation)[0] as! SKSpriteNode
+            let data1 = Array(selectedNode.name!)
+            let data2 = Array(selectedNode2.name!)
             
-        /*levelUp(object1: storedObject, object2: <#T##SKSpriteNode#>, level1: storedLevel, level2: <#T##Int#>, platform2: <#T##CGPoint#>, platformValue1: storedPlatform, platformValue2: <#T##Int#>)
+            let objectType1 = String(data1[0].unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
+            let objectType2 = String(data2[0].unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
+            if Int(objectType1) == 31 && Int(objectType2) == 31{
+            
+            let level1 = Int(data1[4].unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
+            let level2 = Int(data2[4].unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
+            let platform2 = (Int(data2[2].unicodeScalars.first!.value - Unicode.Scalar("0")!.value) - 1)
+            let newPlatform = CGPoint(x: platformX[platform2], y: platformY[platform2])
+                
+                levelUp(object1: selectedNode, object2: selectedNode2, level1: level1, level2: level2, platform2: newPlatform, platformValue1: storedPlatform, platformValue2: platform2)
+            }
+            else {
+                levelingUp = false
+            }
+        }
+        
         if levelingUp == false {
         activeObject.position = CGPoint(x: platformX[storedPlatform! - 1], y: platformY[storedPlatform! - 1])
-        }*/
+        }
     }
     
     func spawnObject(levelMod: Int, platformPos: CGPoint, platformSpot: Int) {
@@ -110,7 +122,7 @@ class GameScene: SKScene {
     func updateSpots() {
         if let i = items.firstIndex(of: 0){
         items[i] = 1
-            let updatePlatform = childNode(withName: "platform\(i + 1)") as! SKSpriteNode
+            let updatePlatform = childNode(withName: "p_\(i + 1)") as! SKSpriteNode
             spawnObject(levelMod: 1, platformPos: updatePlatform.position, platformSpot: (i + 1))
             isFull = false
         }
@@ -151,7 +163,7 @@ class GameScene: SKScene {
             platform.position = CGPoint(x: trueX, y: trueY)
             platform.zPosition = -1
             platform.isUserInteractionEnabled = false
-            platform.name = "platform\(positionSetting + 1)"
+            platform.name = "p_\(positionSetting + 1)"
             addChild(platform)
     }
     
@@ -171,7 +183,7 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         physicsWorld.gravity = CGVector.zero
-        backgroundColor = SKColor.red
+        backgroundColor = SKColor.white
         spawnCrate()
         startTimer()
         for i in 0...8 {
