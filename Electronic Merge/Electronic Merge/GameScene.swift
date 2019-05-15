@@ -17,6 +17,7 @@ class GameScene: SKScene {
     let objectID = 2
     let nilID = 0
     var levelingUp: Bool!
+    var doItemsExist: Bool!
     
     
     func physicBodySetUp(sprite: SKSpriteNode, ID1: Int) {
@@ -62,7 +63,12 @@ class GameScene: SKScene {
         }
     }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if items[0] == 1 {
+        for i in items {
+            if items[i] >= 0 {
+                doItemsExist = true
+            }
+        }
+       if doItemsExist == true {
         for touch in touches {
             let location = touch.location(in: self)
             activeObject.position.x = location.x
@@ -73,8 +79,8 @@ class GameScene: SKScene {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         if let touchLocation = touch?.location(in: self) {
-            let selectedNode = nodes(at: touchLocation)[1] as! SKSpriteNode
-            let selectedNode2 = nodes(at: touchLocation)[0] as! SKSpriteNode
+            let selectedNode = nodes(at: touchLocation)[0] as! SKSpriteNode
+            let selectedNode2 = nodes(at: touchLocation)[1] as! SKSpriteNode
             let data1 = Array(selectedNode.name!)
             let data2 = Array(selectedNode2.name!)
             
@@ -88,13 +94,18 @@ class GameScene: SKScene {
             let newPlatform = CGPoint(x: platformX[platform2], y: platformY[platform2])
                 
                 levelUp(object1: selectedNode, object2: selectedNode2, level1: level1, level2: level2, platform2: newPlatform, platformValue1: storedPlatform, platformValue2: platform2)
-            }
+                }
             else {
                 levelingUp = false
             }
         }
         
         if levelingUp == false {
+            print(storedPlatform)
+            print(platformX)
+            print(platformY)
+            print(platformX[storedPlatform] - 1)
+            print(platformY[storedPlatform] - 1)
         activeObject.position = CGPoint(x: platformX[storedPlatform! - 1], y: platformY[storedPlatform! - 1])
         }
     }
