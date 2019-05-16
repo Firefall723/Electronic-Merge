@@ -17,7 +17,8 @@ class GameScene: SKScene {
     let objectID = 2
     let nilID = 0
     var levelingUp: Bool!
-    var doItemsExist: Bool!
+    var crateTapped: Bool!
+    var objectExist: Bool!
     
     
     func physicBodySetUp(sprite: SKSpriteNode, ID1: Int) {
@@ -54,6 +55,7 @@ class GameScene: SKScene {
             if let touch = touches.first{
                 let touchLocation = touch.location(in: self)
                 if nodes(at: touchLocation).isEmpty == false {
+                    objectExist = true
         if let selectedNode = nodes(at: touchLocation)[0] as?
             SKSpriteNode {
             
@@ -61,27 +63,40 @@ class GameScene: SKScene {
         activeObject = selectedNode
         storedData = Array(activeObject.name!)
             let objectType = Int(storedData[0].unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
+            if objectType != 19 {
+                crateTapped = false
             if objectType == 31 {
         let platformStoredInt = storedData[2]
                 storedPlatform = Int(platformStoredInt.unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
             }
+            }
+            else {
+                crateTapped = true
+            }
         }
                 }
-                
+                else {
+                    objectExist = false
+                }
             }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?){
         for touch in touches {
             let location = touch.location(in: self)
+            if objectExist == true {
+                if crateTapped == false {
             activeObject.position.x = location.x
             activeObject.position.y = location.y
+                }
+            }
         }
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         if let touchLocation = touch?.location(in: self) {
             if nodes(at: touchLocation).isEmpty == false {
+                if crateTapped == false {
             if let selectedNode = nodes(at: touchLocation)[1] as? SKSpriteNode {
                 if let selectedNode2 = nodes(at: touchLocation)[0] as? SKSpriteNode {
             let data1 = Array(selectedNode.name!)
@@ -114,6 +129,7 @@ class GameScene: SKScene {
             print(platformX[storedPlatform] - 1)
             print(platformY[storedPlatform] - 1)
         activeObject.position = CGPoint(x: platformX[storedPlatform! - 1], y: platformY[storedPlatform! - 1])
+        }
         }
     }
     func spawnObject(levelMod: Int, platformPos: CGPoint, platformSpot: Int) {
