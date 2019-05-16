@@ -12,7 +12,6 @@
 		513C8F3B22709C4D00876986 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 513C8F3922709C4D00876986 /* Main.storyboard */; };
 		513C8F3D22709C4E00876986 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 513C8F3C22709C4E00876986 /* Assets.xcassets */; };
 		513C8F4022709C4E00876986 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 513C8F3E22709C4E00876986 /* LaunchScreen.storyboard */; };
-		5195A3072279D9AA001C6B5B /* CollosionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5195A3062279D9AA001C6B5B /* CollosionInfo.swift */; };
 		51EEDB0022733A0E00936D36 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EEDAFF22733A0E00936D36 /* GameScene.swift */; };
 /* End PBXBuildFile section */
 
@@ -24,7 +23,6 @@
 		513C8F3C22709C4E00876986 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		513C8F3F22709C4E00876986 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		513C8F4122709C4E00876986 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5195A3062279D9AA001C6B5B /* CollosionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollosionInfo.swift; sourceTree = "<group>"; };
 		51EEDAFF22733A0E00936D36 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,7 +59,6 @@
 				513C8F2F22709C4D00876986 /* AppDelegate.swift */,
 				513C8F3722709C4D00876986 /* GameViewController.swift */,
 				51EEDAFF22733A0E00936D36 /* GameScene.swift */,
-				5195A3062279D9AA001C6B5B /* CollosionInfo.swift */,
 				513C8F3922709C4D00876986 /* Main.storyboard */,
 				513C8F3C22709C4E00876986 /* Assets.xcassets */,
 				513C8F3E22709C4E00876986 /* LaunchScreen.storyboard */,
@@ -141,7 +138,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5195A3072279D9AA001C6B5B /* CollosionInfo.swift in Sources */,
 				513C8F3822709C4D00876986 /* GameViewController.swift in Sources */,
 				51EEDB0022733A0E00936D36 /* GameScene.swift in Sources */,
 				513C8F3022709C4D00876986 /* AppDelegate.swift in Sources */,

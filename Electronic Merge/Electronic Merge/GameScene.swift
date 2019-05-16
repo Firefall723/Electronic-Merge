@@ -51,36 +51,39 @@ class GameScene: SKScene {
 
     
         override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    let touch = touches.first
-    if let touchLocation = touch?.location(in: self) {
-    let selectedNode = nodes(at: touchLocation)[0] as! SKSpriteNode
+            if let touch = touches.first{
+                let touchLocation = touch.location(in: self)
+                if nodes(at: touchLocation).isEmpty == false {
+        if let selectedNode = nodes(at: touchLocation)[0] as?
+            SKSpriteNode {
+            
         
         activeObject = selectedNode
         storedData = Array(activeObject.name!)
+            let objectType = Int(storedData[0].unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
+            if objectType == 31 {
         let platformStoredInt = storedData[2]
-        storedPlatform = Int(platformStoredInt.unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
-        
-        }
-    }
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for i in items {
-            if items[i] >= 0 {
-                doItemsExist = true
+                storedPlatform = Int(platformStoredInt.unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
             }
         }
-       if doItemsExist == true {
+                }
+                
+            }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?){
         for touch in touches {
             let location = touch.location(in: self)
             activeObject.position.x = location.x
             activeObject.position.y = location.y
         }
-        }
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         if let touchLocation = touch?.location(in: self) {
-            let selectedNode = nodes(at: touchLocation)[0] as! SKSpriteNode
-            let selectedNode2 = nodes(at: touchLocation)[1] as! SKSpriteNode
+            if nodes(at: touchLocation).isEmpty == false {
+            if let selectedNode = nodes(at: touchLocation)[1] as? SKSpriteNode {
+                if let selectedNode2 = nodes(at: touchLocation)[0] as? SKSpriteNode {
             let data1 = Array(selectedNode.name!)
             let data2 = Array(selectedNode2.name!)
             
@@ -94,10 +97,14 @@ class GameScene: SKScene {
             let newPlatform = CGPoint(x: platformX[platform2], y: platformY[platform2])
                 
                 levelUp(object1: selectedNode, object2: selectedNode2, level1: level1, level2: level2, platform2: newPlatform, platformValue1: storedPlatform, platformValue2: platform2)
+                    }
+                }
                 }
             else {
                 levelingUp = false
-            }
+ 
+ }
+        }
         }
         
         if levelingUp == false {
@@ -109,7 +116,6 @@ class GameScene: SKScene {
         activeObject.position = CGPoint(x: platformX[storedPlatform! - 1], y: platformY[storedPlatform! - 1])
         }
     }
-    
     func spawnObject(levelMod: Int, platformPos: CGPoint, platformSpot: Int) {
         var object: SKSpriteNode!
         self.object = object
@@ -187,6 +193,8 @@ class GameScene: SKScene {
         timer.fontName = "AvenirNextCondensed-Bold"
         crate.position = CGPoint(x: ((self.size.width) * 0.5) , y: ((self.size.height) * 0.1))
         timer.position = CGPoint(x: (((self.size.width) * 0.5) + 75), y: ((self.size.height) * 0.15))
+        crate.name = "C_0"
+        timer.name = "T_0"
         addChild(crate)
         addChild(timer)
     }
@@ -195,6 +203,7 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         physicsWorld.gravity = CGVector.zero
         backgroundColor = SKColor.white
+        self.name = "view"
         spawnCrate()
         startTimer()
         for i in 0...8 {
