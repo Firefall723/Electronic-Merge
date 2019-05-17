@@ -19,6 +19,7 @@ class GameScene: SKScene {
     var levelingUp: Bool!
     var crateTapped: Bool!
     var objectExist: Bool!
+    var selectedNode2: SKSpriteNode!
     
     
     func physicBodySetUp(sprite: SKSpriteNode, ID1: Int) {
@@ -36,11 +37,15 @@ class GameScene: SKScene {
             object1.removeFromParent()
             object2.removeFromParent()
             let newLevel = (level1 + 1)
+            if platformValue2 != platformValue1 {
             spawnObject(levelMod: newLevel, platformPos: platform2, platformSpot: platformValue2)
-            items[(platformValue1 - 1)] = 0
-            items[(platformValue2 - 1)] = newLevel
+            print(platformValue1)
+            items[(platformValue1)] = 0
+            print(platformValue2)
+            items[(platformValue2)] = newLevel
+            print(items)
             
-            
+            }
         }
         else {
             levelingUp = false
@@ -68,6 +73,7 @@ class GameScene: SKScene {
             if objectType == 31 {
         let platformStoredInt = storedData[2]
                 storedPlatform = Int(platformStoredInt.unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
+                print(storedPlatform)
             }
             }
             else {
@@ -97,8 +103,14 @@ class GameScene: SKScene {
         if let touchLocation = touch?.location(in: self) {
             if nodes(at: touchLocation).isEmpty == false {
                 if crateTapped == false {
-            if let selectedNode = nodes(at: touchLocation)[1] as? SKSpriteNode {
-                if let selectedNode2 = nodes(at: touchLocation)[0] as? SKSpriteNode {
+                    if nodes(at: touchLocation).count >= 2 {
+            if let selectedNode = activeObject {
+                if nodes(at: touchLocation)[0] == selectedNode {
+                selectedNode2 = nodes(at: touchLocation)[1] as? SKSpriteNode
+                }
+                else {
+                selectedNode2 = nodes(at: touchLocation)[0] as? SKSpriteNode
+                }
             let data1 = Array(selectedNode.name!)
             let data2 = Array(selectedNode2.name!)
             
@@ -108,7 +120,7 @@ class GameScene: SKScene {
             
             let level1 = Int(data1[4].unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
             let level2 = Int(data2[4].unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
-            let platform2 = (Int(data2[2].unicodeScalars.first!.value - Unicode.Scalar("0")!.value) - 1)
+            let platform2 = Int(data2[2].unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
             let newPlatform = CGPoint(x: platformX[platform2], y: platformY[platform2])
                 
                 levelUp(object1: selectedNode, object2: selectedNode2, level1: level1, level2: level2, platform2: newPlatform, platformValue1: storedPlatform, platformValue2: platform2)
@@ -123,14 +135,9 @@ class GameScene: SKScene {
         }
         
         if levelingUp == false {
-            print(storedPlatform)
-            print(platformX)
-            print(platformY)
-            print(platformX[storedPlatform] - 1)
-            print(platformY[storedPlatform] - 1)
-        activeObject.position = CGPoint(x: platformX[storedPlatform! - 1], y: platformY[storedPlatform! - 1])
+        activeObject.position = CGPoint(x: platformX[storedPlatform!], y: platformY[storedPlatform!])
         }
-        }
+            }
     }
     func spawnObject(levelMod: Int, platformPos: CGPoint, platformSpot: Int) {
         var object: SKSpriteNode!
@@ -156,7 +163,7 @@ class GameScene: SKScene {
         if let i = items.firstIndex(of: 0){
         items[i] = 1
             let updatePlatform = childNode(withName: "p_\(i + 1)") as! SKSpriteNode
-            spawnObject(levelMod: 1, platformPos: updatePlatform.position, platformSpot: (i + 1))
+            spawnObject(levelMod: 1, platformPos: updatePlatform.position, platformSpot: (i))
             isFull = false
         }
         else {
