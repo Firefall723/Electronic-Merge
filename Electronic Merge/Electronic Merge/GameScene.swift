@@ -20,7 +20,8 @@ class GameScene: SKScene {
     var crateTapped: Bool!
     var objectExist: Bool!
     var selectedNode2: SKSpriteNode!
-    
+    let sprites: [String] = ["Wire", "CircuitBoard", "Screen"]
+    var objectType: Int!
     
     func physicBodySetUp(sprite: SKSpriteNode, ID1: Int) {
         sprite.physicsBody = SKPhysicsBody(rectangleOf: sprite.size)
@@ -39,11 +40,8 @@ class GameScene: SKScene {
             let newLevel = (level1 + 1)
             if platformValue2 != platformValue1 {
             spawnObject(levelMod: newLevel, platformPos: platform2, platformSpot: platformValue2)
-            print(platformValue1)
             items[(platformValue1)] = 0
-            print(platformValue2)
             items[(platformValue2)] = newLevel
-            print(items)
             
             }
         }
@@ -67,13 +65,12 @@ class GameScene: SKScene {
         
         activeObject = selectedNode
         storedData = Array(activeObject.name!)
-            let objectType = Int(storedData[0].unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
-            if objectType != 19 {
+            objectType = Int(storedData[0].unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
+            if objectType != 18 && objectType! != 19 && objectType != 64 {
                 crateTapped = false
             if objectType == 31 {
         let platformStoredInt = storedData[2]
                 storedPlatform = Int(platformStoredInt.unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
-                print(storedPlatform)
             }
             }
             else {
@@ -90,19 +87,18 @@ class GameScene: SKScene {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?){
         for touch in touches {
             let location = touch.location(in: self)
-            if objectExist == true {
-                if crateTapped == false {
+            if crateTapped == false
+            {
             activeObject.position.x = location.x
             activeObject.position.y = location.y
                 }
             }
         }
-    }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         if let touchLocation = touch?.location(in: self) {
             if nodes(at: touchLocation).isEmpty == false {
-                if crateTapped == false {
+                if objectType != 18 && objectType != 19 && objectType != 64{
                     if nodes(at: touchLocation).count >= 2 {
             if let selectedNode = activeObject {
                 if nodes(at: touchLocation)[0] == selectedNode {
@@ -135,17 +131,18 @@ class GameScene: SKScene {
         }
         
         if levelingUp == false {
+        if objectType! != 18 && objectType! != 19 && objectType! != 64 {
         activeObject.position = CGPoint(x: platformX[storedPlatform!], y: platformY[storedPlatform!])
+            }
         }
             }
     }
     func spawnObject(levelMod: Int, platformPos: CGPoint, platformSpot: Int) {
         var object: SKSpriteNode!
+        let spriteVal = (levelMod - 1)
         self.object = object
-        if levelMod == 1 {
-        object = SKSpriteNode(imageNamed: "Wire")        }
-        else if levelMod == 2 {
-        object = SKSpriteNode(imageNamed: "CircuitBoard")
+        if levelMod <= sprites.count {
+        object = SKSpriteNode(imageNamed: sprites[spriteVal])
         }
         else {
         object = SKSpriteNode(color: .red, size: platformSize)
@@ -193,15 +190,15 @@ class GameScene: SKScene {
     
     
     func platforms(positionSetting: Int) {
-        let platform = SKSpriteNode(color: UIColor.black, size: platformSize)
+        let platform = SKSpriteNode(imageNamed: "Platform")
         let positionX: [CGFloat] = [0.15, 0.5, 0.85, 0.15, 0.5, 0.85, 0.15, 0.5, 0.85]
         let positionY: [CGFloat] = [0.45, 0.45, 0.45, 0.6, 0.6, 0.6, 0.75, 0.75, 0.75]
             let trueX =  ((self.size.width) * positionX[positionSetting])
             let trueY = ((self.size.height) * positionY[positionSetting])
         platformX.append(trueX)
         platformY.append(trueY + 5)
+        platform.size = platformSize
             platform.position = CGPoint(x: trueX, y: trueY)
-            platform.zPosition = -1
             platform.isUserInteractionEnabled = false
             platform.name = "p_\(positionSetting + 1)"
             addChild(platform)
@@ -224,8 +221,14 @@ class GameScene: SKScene {
     
     
     override func didMove(to view: SKView) {
+        let backgroundImage = SKSpriteNode(imageNamed: "woodgrain")
+        backgroundImage.size = self.size
+        backgroundImage.isUserInteractionEnabled = false
+        backgroundImage.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
+        backgroundImage.name = "BG"
+        backgroundImage.zPosition = -1
+        addChild(backgroundImage)
         physicsWorld.gravity = CGVector.zero
-        backgroundColor = SKColor.white
         self.name = "view"
         spawnCrate()
         startTimer()
