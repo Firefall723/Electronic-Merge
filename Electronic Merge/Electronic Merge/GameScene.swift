@@ -7,7 +7,8 @@ class GameScene: SKScene {
     var items: [Int] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     var platformX: [CGFloat] = []
     var platformY: [CGFloat] = []
-    let platformSize = CGSize(width: 50, height: 50)
+    let objectSize = CGSize(width: 50, height: 50)
+    let platformSize = CGSize(width: 50, height: 20)
     var activeObject: SKSpriteNode!
     var storedPlatform: Int!
     var storedData: [Character] = []
@@ -74,7 +75,7 @@ class GameScene: SKScene {
             }
             }
             else if objectType == 19{
-                crateTapped = true
+                timeUpdate()
             }
             else {
                 crateTapped = false
@@ -131,12 +132,9 @@ class GameScene: SKScene {
  
  }
         }
-        }
-        
-        if levelingUp == false {
-        if objectType! != 18 && objectType! != 19 && objectType! != 64 {
-        activeObject.position = CGPoint(x: platformX[storedPlatform!], y: platformY[storedPlatform!])
             }
+        if objectType! != 18 && objectType! != 19 && objectType! != 64 {
+        activeObject.position = CGPoint(x: platformX[storedPlatform!], y: platformY[storedPlatform!] + 15)
         }
             }
     }
@@ -150,8 +148,8 @@ class GameScene: SKScene {
         else {
         object = SKSpriteNode(color: .red, size: platformSize)
         }
-        object.size = platformSize
-        object.position = CGPoint(x: (platformPos.x), y: (platformPos.y + 5))
+        object.size = objectSize
+        object.position = CGPoint(x: (platformPos.x), y: (platformPos.y + 20))
         object.name = "O_\(platformSpot)_\(levelMod)"
         object.zPosition = 1
         physicBodySetUp(sprite: object, ID1: objectID)
@@ -167,9 +165,6 @@ class GameScene: SKScene {
             spawnObject(levelMod: 1, platformPos: updatePlatform.position, platformSpot: (i))
             isFull = false
         }
-        else {
-            isFull = true
-        }
     }
     
     func startTimer() {
@@ -177,7 +172,7 @@ class GameScene: SKScene {
     }
     
     @objc func timeUpdate() {
-        if isFull == false {
+       if items.contains(0) == true {
         if time <= 10 && time >= 1 {
             time = (time - 1)
             timer.text = "\(time)"
@@ -186,7 +181,7 @@ class GameScene: SKScene {
             time = 10
             timer.text = "\(time)"
             updateSpots()
-        }
+            }
         } else {
             timer.text = "Full"
         }
