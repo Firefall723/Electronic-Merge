@@ -73,8 +73,11 @@ class GameScene: SKScene {
                 storedPlatform = Int(platformStoredInt.unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
             }
             }
-            else {
+            else if objectType == 19{
                 crateTapped = true
+            }
+            else {
+                crateTapped = false
             }
         }
                 }
@@ -87,7 +90,7 @@ class GameScene: SKScene {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?){
         for touch in touches {
             let location = touch.location(in: self)
-            if crateTapped == false
+            if  objectType != 18 && objectType != 19 && objectType != 64
             {
             activeObject.position.x = location.x
             activeObject.position.y = location.y
@@ -150,6 +153,7 @@ class GameScene: SKScene {
         object.size = platformSize
         object.position = CGPoint(x: (platformPos.x), y: (platformPos.y + 5))
         object.name = "O_\(platformSpot)_\(levelMod)"
+        object.zPosition = 1
         physicBodySetUp(sprite: object, ID1: objectID)
         addChild(object)
     }
@@ -201,6 +205,7 @@ class GameScene: SKScene {
             platform.position = CGPoint(x: trueX, y: trueY)
             platform.isUserInteractionEnabled = false
             platform.name = "p_\(positionSetting + 1)"
+        platform.zPosition = 0
             addChild(platform)
     }
     
