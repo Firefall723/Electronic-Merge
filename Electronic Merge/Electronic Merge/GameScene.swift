@@ -23,15 +23,7 @@ class GameScene: SKScene {
     var selectedNode2: SKSpriteNode!
     let sprites: [String] = ["Wire", "CircuitBoard", "Screen"]
     var objectType: Int!
-    
-    func physicBodySetUp(sprite: SKSpriteNode, ID1: Int) {
-        sprite.physicsBody = SKPhysicsBody(rectangleOf: sprite.size)
-        sprite.physicsBody?.isDynamic = true
-        sprite.physicsBody?.categoryBitMask = UInt32(ID1)
-        sprite.physicsBody?.contactTestBitMask = UInt32(ID1)
-        sprite.physicsBody?.collisionBitMask = UInt32(nilID)
-    }
-    
+   
     func levelUp(object1: SKSpriteNode, object2: SKSpriteNode, level1: Int, level2: Int, platform2: CGPoint, platformValue1: Int, platformValue2: Int){
         
         if level1 == level2 {
@@ -152,7 +144,6 @@ class GameScene: SKScene {
         object.position = CGPoint(x: (platformPos.x), y: (platformPos.y + 20))
         object.name = "O_\(platformSpot)_\(levelMod)"
         object.zPosition = 1
-        physicBodySetUp(sprite: object, ID1: objectID)
         addChild(object)
     }
     
@@ -228,7 +219,6 @@ class GameScene: SKScene {
         backgroundImage.name = "BG"
         backgroundImage.zPosition = -1
         addChild(backgroundImage)
-        physicsWorld.gravity = CGVector.zero
         self.name = "view"
         spawnCrate()
         startTimer()

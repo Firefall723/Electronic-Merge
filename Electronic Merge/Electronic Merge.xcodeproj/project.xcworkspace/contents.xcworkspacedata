@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Electronic Merge.xcodeproj">
+      location = "group:/Users/gerardo.lozoya20/Desktop/GitHub/Electronic-merge/Electronic Merge/Electronic Merge/Electronic Merge/electronicMerge Logo.png">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>
