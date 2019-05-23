@@ -23,6 +23,11 @@ class GameScene: SKScene {
     var selectedNode2: SKSpriteNode!
     let sprites: [String] = ["Wire", "CircuitBoard", "Screen"]
     var objectType: Int!
+    
+    //Savedata stuff
+    let saveData = UserDefaults.standard
+    
+    
    
     func levelUp(object1: SKSpriteNode, object2: SKSpriteNode, level1: Int, level2: Int, platform2: CGPoint, platformValue1: Int, platformValue2: Int){
         
@@ -35,7 +40,14 @@ class GameScene: SKScene {
             spawnObject(levelMod: newLevel, platformPos: platform2, platformSpot: platformValue2)
             items[(platformValue1)] = 0
             items[(platformValue2)] = newLevel
-            
+                if let test = saveData.array(forKey: "itemsSaved"){
+                    saveData.removeObject(forKey: "itemsSaved")
+            saveData.set(items, forKey: "itemsSaved")
+
+                }
+                else {
+                    saveData.set(items, forKey: "itemsSaved")
+               }
             }
         }
         else {
@@ -59,7 +71,7 @@ class GameScene: SKScene {
         activeObject = selectedNode
         storedData = Array(activeObject.name!)
             objectType = Int(storedData[0].unicodeScalars.first!.value - Unicode.Scalar("0")!.value)
-            if objectType != 18 && objectType! != 19 && objectType != 64 {
+            if objectType != 18 && objectType! != 19 && objectType != 64{
                 crateTapped = false
             if objectType == 31 {
         let platformStoredInt = storedData[2]
@@ -145,6 +157,7 @@ class GameScene: SKScene {
         object.name = "O_\(platformSpot)_\(levelMod)"
         object.zPosition = 1
         addChild(object)
+
     }
     
     
@@ -155,6 +168,13 @@ class GameScene: SKScene {
             let updatePlatform = childNode(withName: "p_\(i + 1)") as! SKSpriteNode
             spawnObject(levelMod: 1, platformPos: updatePlatform.position, platformSpot: (i))
             isFull = false
+            if let test = saveData.array(forKey: "itemsSaved") {
+                saveData.removeObject(forKey: "itemsSaved")
+                saveData.set(items, forKey: "itemsSaved")
+            }
+            else {
+                saveData.set(items, forKey: "itemsSaved")
+            }
         }
     }
     
@@ -224,6 +244,15 @@ class GameScene: SKScene {
         startTimer()
         for i in 0...8 {
         platforms(positionSetting: i)
+        }
+    if let savedObjects = saveData.array(forKey: "itemsSaved") as? [Int] {
+        items = savedObjects
+        for i in 0...8 {
+
+        if savedObjects[i] != 0 {
+            spawnObject(levelMod: savedObjects[i], platformPos: CGPoint(x: platformX[i], y: platformY[i]) , platformSpot: i)
+            }
+            }
         }
     }
 }
