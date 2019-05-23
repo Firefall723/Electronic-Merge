@@ -8,6 +8,7 @@ class GameScene: SKScene {
     var platformX: [CGFloat] = []
     var platformY: [CGFloat] = []
     let objectSize = CGSize(width: 50, height: 50)
+    let objectSize2 = CGSize(width: 30, height: 50)
     let platformSize = CGSize(width: 50, height: 20)
     var activeObject: SKSpriteNode!
     var storedPlatform: Int!
@@ -21,7 +22,7 @@ class GameScene: SKScene {
     var crateTapped: Bool!
     var objectExist: Bool!
     var selectedNode2: SKSpriteNode!
-    let sprites: [String] = ["Wire", "CircuitBoard", "Screen"]
+    let sprites: [String] = ["Wire", "CircuitBoard", "Screen", "Phone"]
     var objectType: Int!
     
     //Savedata stuff
@@ -152,7 +153,12 @@ class GameScene: SKScene {
         else {
         object = SKSpriteNode(color: .red, size: platformSize)
         }
+        if spriteVal == 3 {
+        object.size = objectSize2
+        }
+        else {
         object.size = objectSize
+        }
         object.position = CGPoint(x: (platformPos.x), y: (platformPos.y + 20))
         object.name = "O_\(platformSpot)_\(levelMod)"
         object.zPosition = 1
