@@ -8,7 +8,7 @@ class GameScene: SKScene {
     var platformX: [CGFloat] = []
     var platformY: [CGFloat] = []
     let objectSize = CGSize(width: 50, height: 50)
-    let objectSize2 = CGSize(width: 30, height: 50)
+    let objectSize2 = CGSize(width: 30, height: 70)
     let platformSize = CGSize(width: 50, height: 20)
     var activeObject: SKSpriteNode!
     var storedPlatform: Int!
